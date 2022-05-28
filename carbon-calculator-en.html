@@ -1,0 +1,1067 @@
+<!-- Autocomplete -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+<style>
+    .search-container{
+        background-color: #44B78B;
+        color: white;
+        width: 60%;
+        margin-left: 20%;
+        height: 310px;
+        z-index: 3;
+        border-radius: 5px;
+
+        height: auto;
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+    }
+
+      @media (max-device-width: 570px) {
+    .search-container{
+      width: 100%;
+      margin-left: 0%;
+      border-radius: 0px;
+    }
+  }
+
+    .transport-mode-row{
+        padding-top: 20px;
+        text-align: center;
+    }
+
+    .transport-mode-container{
+        margin: auto;
+        width: 320px;
+        max-width: 100%;
+    }
+
+    .tm-select-col{
+        width: 18%;
+        text-align: center;
+        display: inline-block;
+        // border: 1px solid red;
+    }
+
+    .tm-select-col img{
+        height: 22px;
+    }
+
+    .tm-3 img, .tm-4 img{
+        height: 20px;
+    }
+
+    .tm-select-col p{
+        color: white;
+        font-size: 10px;
+        margin: 4px 0px;
+    }
+
+    .tm-checkbox{
+      position: absolute;
+      z-index: 1;
+      margin-right: -20px;
+      opacity: 0;
+    }
+
+    .tm-checkbox + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .tm-checkbox + label::before {
+      content: '';
+      /* margin-right: 10px; */
+      display: inline-block;
+      vertical-align: text-top;
+      width: 15px;
+      height: 15px;
+      background: white;
+      border: 1px solid white;
+      border-radius: 6px;
+    }
+
+    .tm-checkbox:focus + label:before {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+    }
+    .tm-checkbox:checked + label:before {
+      background: #b74470ff;
+    }
+    .tm-checkbox:disabled + label {
+      color: #b8b8b8;
+      cursor: auto;
+    }
+    .tm-checkbox:disabled + label:before {
+      box-shadow: none;
+      background: #ddd;
+    }
+    .tm-checkbox:checked + label:after {
+      content: '';
+      position: absolute;
+    }
+
+    .tm-select-col, .tm-select-col *{
+        cursor: pointer;
+    }
+
+    .calculation-mode-row{
+        height: 20px;
+        border: 1px solid green;
+    }
+
+    .form-field-container{
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .form-field-container > input, .duration-field, .distance-field{
+        width: 260px;
+        max-width: 85%;
+        height: 40px;
+        padding: 10px 15px;
+        font-size: 15px;
+        color: black;
+        background-color: white;
+        border: 0px;
+        border-radius: 5px;
+    }
+
+    .form-field:focus{
+        outline-color: #b74470ff;;
+    }
+
+    .options-row{
+        margin-top: 35px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .options-container{
+        max-width: 100%;
+        width: 320px;
+        margin: auto;
+    }
+
+    .form-icon{
+        position: absolute;
+        margin-left: 7%;
+        top: 9px;
+        left: 0px;
+        height: 18px;
+        width: 18px;
+        opacity: 0.5;
+        text-align: center;
+        pointer-events: none;
+        margin-top: 5px;
+        margin-left: 20px;
+        top: 2px;
+        margin-left: 15px;
+    }
+
+    .size-icon{
+        height: inherit;
+    }
+
+    #calculate-btn{
+        width: 260px;
+        max-width: 85%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-color: #b74470ff !important;
+        border: 1px solid white;
+        border-radius: 20px;
+    }
+
+    .option-field-container{
+        max-width: 30%;
+        width: 30%;
+        display: inline;
+        font-size: 11px;
+        margin: 0px 5px;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    .speech-bubble {
+    	position: relative;
+        background: #b74470ff;
+        background: #44B78B;
+    	background: white;
+    	border-radius: .4em;
+        color: #44B78B;
+        }
+
+    .speech-bubble:after {
+    	content: '';
+    	position: absolute;
+    	top: 0;
+    	left: 50%;
+    	width: 0;
+    	height: 0;
+    	border: 14px solid transparent;
+    	border-bottom-color: #b74470ff;
+        border-bottom-color: #44B78B;
+        border-bottom-color: white;
+    	border-top: 0;
+    	border-right: 0;
+    	margin-left: 80px;
+    	margin-top: -14px;
+    }
+
+    .car-detail-container{
+        display: block;
+        width: 300px;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .car-detail-container > label{
+        width: 120px !important;
+        font-weight: normal;
+    }
+
+    .cities-form-field{
+        width: 260px;
+        max-width: 85%;
+        margin: auto;
+        margin-top: 15px;
+        height: 80px;
+    }
+
+    .city-form-field{
+        height: 40px;
+    }
+
+    .city-form-field input:focus{
+        outline-color: #b74470ff;
+    }
+
+    .city-form-field input{
+        height: 39px;
+        font-size: 15px;
+        padding-left: 50px;
+        padding-right: 14px;
+        border-radius: 5px;
+        border: none;
+        width: 100% !important;
+    }
+
+    .autocomplete-results{
+        background-color: white;
+        padding: 2px 5px;
+        border: 1px solid rgb(220, 220, 220);
+    }
+
+    .form-icon{
+        top: 2px;
+        margin-left: 15px;
+    }
+
+    .slider-container{
+        display: relative;
+    }
+
+    .slidecontainer{
+        width: 40px;
+        margin: auto;
+        display: inline-block;
+        position: relative;
+        z-index: 20;
+    }
+
+    /* The slider itself */
+    .slider {
+      -webkit-appearance: none;  /* Override default CSS styles */
+      appearance: none;
+      border-radius: 8px;
+      width: 100%; /* Full-width */
+      height: 14px !important; /* Specified height */
+      outline: none; /* Remove outline */
+      -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+      transition: opacity .2s;
+      background-color: white;
+    }
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none !important; /* Override default look */
+      appearance: none !important;
+      width: 24px; /* Set a specific slider handle width */
+      height: 24px; /* Slider handle height */
+      border-radius: 12px;
+      background: #b74470ff !important; /* Purple background */
+      cursor: pointer; /* Cursor on hover */
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px; /* Set a specific slider handle width */
+      height: 25px; /* Slider handle height */
+      border-radius: 12px;
+      background: #b74470ff; /* Purple background */
+      cursor: pointer; /* Cursor on hover */
+    }
+
+    .slider-option{
+        display: inline-block;
+        font-size: 12px;
+        margin: 0px 25px;
+        position: relative;
+        width: 70px;
+        z-index: 10px;
+        /* margin-top: -3px; */
+    }
+
+    .slider-option-not-selected{
+        opacity: 0.75;
+        font-weight: 200;
+    }
+
+    .ui-menu-item{
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+    .ui-menu .ui-menu-item-wrapper{
+        font-size: 14px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .ui-menu .ui-menu-item-wrapper:focus{
+        background-color: #b74470ff !important;
+    }
+    .ui-menu.ui-widget-content.ui-autocomplete{
+        max-width: 260px;
+    }
+
+    .ui-menu-item .ui-menu-item-wrapper.ui-state-active {
+        background: #b74470ff !important;
+        color: white !important;
+    }
+
+
+
+    .form-field-option{
+        background-color: white;
+        border: 0px;
+        color: black
+    }
+
+    #options-car-details-container .form-field-option{
+        width: 110px;
+        height: 28px;
+        border: 1px solid rgb(240, 240, 240);
+        padding: 2px 5px;
+    }
+
+    select {
+      -webkit-appearance: menulist !imporant;
+      /*webkit browsers */
+      -moz-appearance: menulist !imporant;
+      /*Firefox */
+      appearance: menulist !imporant;
+
+      cursor: pointer;
+    }
+
+    #car-details-btn{
+        display: inline-block;
+    }
+
+    #options-car-details-container{
+        border: 1px solid;
+        border-radius: 15px;
+        width: 320px;
+        max-width: 85%;
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: -35px;
+        padding: 10px;
+        /* margin: 5px; */
+    }
+
+    #options-car-details-container .option-field-container{
+        padding: 2px 5px;
+    }
+
+    .custom-arrow{
+        display: none;
+    }
+
+    @media only screen
+    and (max-device-width: 600px)
+     {
+         .custom-arrow{
+             display: inline;
+         }
+     }
+
+
+     /* RESULTS */
+
+    .results-container{
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        /* border: 1px solid black; */
+    }
+
+    .results-container h2{
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .results-container h3{
+        color: white !important;
+    }
+
+
+    .leg-container{
+        position: relative;
+        border: 1px solid white;
+        border-radius: 25px;
+        padding-bottom: 20px;
+        background-color: #44B78B;
+        height: 120px;
+        width: 90%;
+        max-width: 640px;
+        margin: auto;
+        margin-top: 10px;
+        color: white;
+        font-size: 12px
+    }
+
+    .btn-custo{
+        color: white;
+        margin: auto;
+        padding: 10px;
+        margin-top: 30px;
+
+        width: 260px;
+        max-width: 85%;
+        background-color: #b74470ff;
+        border: 1px solid white;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-field{
+        text-align: center;
+        background-color: #44B78B;
+      }
+
+    #learn-co2-btn{
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    #equal-sum-line{
+        background-color: #44B78B;
+        width: 90%;
+        margin: auto;
+        height: 2px;
+        margin-top: 10px;
+    }
+
+    #total-co2-container{
+        margin-top: 30px;
+        margin-bottom: 60px;
+    }
+
+    #total-title{
+        font-size: 24px;
+        font-weight: 100;
+        margin: 5px;
+        color: rgb(50, 50, 50);
+    }
+
+    #total-co2{
+        color: #b74470ff;
+    }
+
+    #total-co2-int{
+        font-size: 40px;
+    }
+
+    #arctic-ice{
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    h3{
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .close-window{
+        position: absolute;
+        font-size: 25px;
+        font-weight: 100;
+        right: 18px;
+        top: 2px;
+        cursor: pointer;
+    }
+
+    .left-col, .right-col{
+        display: inline-block;
+        position: absolute;
+        /* border: 1px solid green; */
+        height: 60px;
+        margin-top: 0px;
+    }
+
+    .left-col{
+        text-align: center;
+        left: 10px;
+        width: 40%;
+        margin-left: 4%;
+    }
+
+    .left-col-inner{
+        text-align: left;
+        /* left: 20px; */
+        width: 160px;
+        margin: auto;
+    }
+
+   .right-col{
+       width: 40%;
+       right: 10%;
+       text-align: center;
+   }
+
+    @media only screen
+    and (max-device-width: 600px)
+     {
+        .right-col{
+            width: 30%;
+            right: 20px;
+
+         }
+
+         .left-col{
+             left: 20px;
+             width: 50%;
+             margin-left: 5%;
+         }
+     }
+
+    .co2-icon{
+        width: 50px;
+        display: block;
+        margin: auto;
+    }
+
+    /* .tm-result, .trip-type-result{
+        position: relative;
+    }
+
+    .tm-type, .trip-type{
+        position: absolute;
+        top: 3px;
+        margin-left: 3px;
+    }
+     .trip-type{
+         top: 2px;
+     } */
+
+    .small-icon, .tm-result img, .element-left-col img{
+        width: 15px;
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    .element-left-col{
+        font-size: 10px;
+        margin: 5px 0px;
+    }
+
+
+    /* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  opacity: 1 !important;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  position: absolute; /* Position the tooltip text */
+  z-index: 1;
+  bottom: 125%;
+  right: 0%;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 90%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 #555 transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hidden, .no-display{
+    display: none;
+}
+
+</style>
+
+<div class="hidden" id="language" data-language="en"></div>
+
+ <h1 class="title-container" id="calculate" style="margin: 50px 0px;">
+
+      Travel Carbon Calculator
+
+  </h1>
+
+ <div class="" style="margin: 50px 20px; text-align:center;">
+
+     <div>Calculate the carbon footprint of your trip.</div>
+     <div style="margin-top: 10px;">Add and compare different modes of transportation.</div>
+
+ </div>
+
+
+
+<div class="search-container">
+
+
+  <form class="form-inline" method="GET">
+      <!-- Row to select mode of transportation -->
+      <div class="transport-mode-row">
+          <div class="transport-mode-container">
+              <div class="tm-select-col tm-0">
+                  <img src="https://res.cloudinary.com/joanmm/image/upload/v1609787429/0.png" class="img-format">
+                  <p class="tm-name">Flight</p>
+                  <input id="checkbox-flight" class="tm-checkbox" type="checkbox" checked="checked">
+                  <label for="filter-flight"></label>
+              </div>
+              <div class="tm-select-col tm-1">
+                  <img src="https://res.cloudinary.com/joanmm/image/upload/v1609787429/1.png" class="img-format">
+                  <p class="tm-name">Train</p>
+                  <input id="checkbox-train" class="tm-checkbox" type="checkbox">
+                  <label for="filter-train"></label>
+              </div>
+              <div class="tm-select-col tm-2">
+                  <img src="https://res.cloudinary.com/joanmm/image/upload/v1609787429/2.png" class="img-format">
+                  <p class="tm-name">Bus</p>
+                  <input id="checkbox-bus" class="tm-checkbox" type="checkbox">
+                  <label for="filter-bus"></label>
+              </div>
+              <div class="tm-select-col tm-4">
+                  <img src="https://res.cloudinary.com/joanmm/image/upload/v1609787429/4.png" class="img-format">
+                  <p class="tm-name">Car</p>
+                  <input id="checkbox-car" class="tm-checkbox" type="checkbox">
+                  <label for="filter-car"></label>
+              </div>
+              <div class="tm-select-col tm-5">
+                  <img src="https://res.cloudinary.com/joanmm/image/upload/v1609787429/5.png" class="img-format">
+                  <p class="tm-name">Ferry</p>
+                  <input id="checkbox-ferry" class="tm-checkbox" type="checkbox">
+                  <label for="filter-ferry"></label>
+              </div>
+          </div>
+      </div>
+
+     <div class="form-field-container slider-container">
+         <div class="slidecontainer">
+          <input type="range" min="0" max="1" value="0" class="slider" id="flightInputSlider">
+        </div>
+        <div style="position: absolute; width: 100%; margin-top: -25px;">
+            <div class="slider-option slider-option-left">Duration</div>
+            <div class="slider-option slider-option-right slider-option-not-selected">Airports</div>
+        </div>
+     </div>
+
+    <div class="cities-form-field hidden">
+      <div class="city-form-field" data-toggle="tooltip-focus-input" style="border-bottom: 1px solid rgb(150, 150, 150);">
+        <input type="search" class="autocomplete-airport ui-autocomplete-input" id="orig-airport" name="orig-airport" placeholder="From (airport code)">
+        <span class="form-icon">
+            <!-- <img class="size-icon" src='https://res.cloudinary.com/joanmm/image/upload/v1609787589/position.png' alt="position icon"/> -->
+        </span>
+      </div>
+      <div class="line-between-cities">
+      </div>
+
+      <div class="city-form-field" data-toggle="tooltip-focus-input">
+        <input type="search" class="autocomplete-airport ui-autocomplete-input" id="dest-airport" name="dest-airport" placeholder="To (airport code)">
+        <span class="form-icon">
+            <!-- <img class="size-icon" src='https://res.cloudinary.com/joanmm/image/upload/v1609787589/location.png' alt="location icon"/> -->
+        </span>
+      </div>
+    </div>
+
+    <div class="custom-select form-field-container duration-field-container">
+        <select class="form-field duration-field" id="duration-dropdown" name="duration-dropdown">
+            <option value="0h30m">30 minutes</option>
+            <option value="0h45m">45 minutes</option>
+            <option value="1h">1 hour</option>
+            <option value="1h15m">1h 15m</option>
+            <option value="1h30m">1h 30m</option>
+            <option value="2h">2 hours</option>
+            <option value="2h30m">2h 30m</option>
+            <option value="3h" selected="selected">3 hours</option>
+            <option value="3h30m">3h 30m</option>
+            <option value="4h">4 hours</option>
+            <option value="5h">5 hours</option>
+            <option value="6h">6 hours</option>
+            <option value="7h">7 hours</option>
+            <option value="8h">8 hours</option>
+            <option value="9h">9 hours</option>
+            <option value="10h">10 hours</option>
+            <option value="11h">11 hours</option>
+            <option value="12h">12 hours</option>
+            <option value="14h">14 hours</option>
+            <option value="16h">16 hours</option>
+            <option value="18h">18 hours</option>
+            <option value="20h">20 hours</option>
+            <option value="22h">22 hours</option>
+            <option value="24h">24 hours</option>
+          </select>
+    </div>
+
+    <div class="custom-select form-field-container distance-field-container hidden">
+        <select class="form-field distance-field" id="distance-dropdown" name="distance-dropdown">
+            <option value="50-km">50 km</option>
+            <option value="100-km">100 km</option>
+            <option value="150-km">150 km</option>
+            <option value="200-km">200 km</option>
+            <option value="250-km">250 km</option>
+            <option value="300-km">300 km</option>
+            <option value="400-km" selected="selected">400 km</option>
+            <option value="500-km">500 km</option>
+            <option value="600-km">600 km</option>
+            <option value="700-km">700 km</option>
+            <option value="800-km">800 km</option>
+            <option value="900-km">900 km</option>
+            <option value="1000-km">1 000 km</option>
+            <option value="1250-km">1 250 km</option>
+            <option value="1500-km">1 500 km</option>
+            <option value="2000-km">2 000 km</option>
+            <option value="3000-km">3 000 km</option>
+            <option value="5000-km">5 000 km</option>
+            <option value="10000-km">10 000 km</option>
+            <option value="20000-km">20 000 km</option>
+            <option value="30000-km">30 000 km</option>
+            <option value="50000-km">50 000 km</option>
+            <option value="100000-km">100 000 km</option>
+            <!-- <option value="200000-km">200 000 km</option> -->
+          </select>
+    </div>
+
+    <div class="options-row">
+        <div class="options-container">
+            <div class="option-field-container trip-type-container">
+                <select class="form-field form-field-option trip-type" id="trip-type-dropdown" name="trip-type-dropdown">
+                    <option value="one-way">One way</option>
+                    <option value="round-trip" selected="selected">Return trip</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container pax-qty-container hidden">
+                <select class="form-field form-field-option" id="pax-qty-dropdown" name="pax-qty-dropdown">
+                    <option value="1-pax" selected="selected">1 passenger</option>
+                    <option value="2-pax">2 passengers</option>
+                    <option value="3-pax">3 passengers</option>
+                    <option value="4-pax">4 passengers</option>
+                    <option value="5-pax">5 passengers</option>
+                    <option value="6-pax">6 passengers</option>
+                    <option value="7-pax">7 passengers</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container pax-class-container">
+                <select class="form-field form-field-option" id="pax-class-dropdown" name="pax-class-dropdown">
+                    <option value="economy-class" selected="selected">Economy class</option>
+                    <option value="business-class">Business class</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container train-energy-container hidden">
+                <select class="form-field form-field-option" id="train-energy-dropdown" name="train-energy-dropdown">
+                    <option value="electric" selected="selected">Electric</option>
+                    <option value="diesel">Diesel</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container train-country-container hidden">
+                <select class="form-field form-field-option" id="train-country-dropdown" name="train-country-dropdown"> 
+                    <option value="average" selected="selected">Average</option>
+                    <option value="AR">Argentina</option>
+                    <option value="AU">Australia</option>
+                    <option value="AT">Austria</option>
+                    <option value="BE">Belgium</option>
+                    <option value="BR">Brazil</option>
+                    <option value="CA">Canada</option>
+                    <!-- <option value="CL">Chile</option> -->
+                    <option value="CN">China</option>
+                    <option value="CZ">Czech Republic</option>
+                    <option value="DK">Denmark</option>
+                    <option value="EE">Estonia</option>
+                    <option value="FI">Finland</option>
+                    <option value="FR">France</option>
+                    <option value="DE">Germany</option>
+                    <option value="GR">Greece</option>
+                    <option value="IE">Ireland</option>
+                    <option value="IN">India</option>
+                    <option value="ID">Indonesia</option>
+                    <option value="IT">Italy</option>
+                    <option value="JP">Japan</option>
+                    <option value="LV">Latvia</option>
+                    <option value="LT">Lithuania</option>
+                    <option value="LU">Luxemburg</option>
+                    <option value="MX">Mexico</option>
+                    <option value="NL">Netherlands</option>
+                    <option value="NZ">New Zealand</option>
+                    <option value="NO">Norway</option>
+                    <option value="PL">Poland</option>
+                    <option value="PT">Portugal</option>
+                    <option value="RU">Russia</option>
+                    <option value="ZA">South Africa</option>
+                    <option value="KR">South Korea</option>
+                    <option value="ES">Spain</option>
+                    <option value="SE">Sweden</option>
+                    <option value="CH">Switzerland</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="US">United States</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container vehicle-ferry-container hidden">
+                <select class="form-field form-field-option" id="vehicle-ferry-dropdown" name="vehicle-ferry-dropdown">
+                    <option value="without-vehicle" selected="selected">Without vehicle</option>
+                    <option value="with-vehicle">With vehicle</option>
+                  </select>
+            </div>
+
+            <div class="option-field-container car-details-container hidden">
+                <div class="" id="car-details-btn">
+                    <div style="display: inline-block;">
+                        Car details
+                    </div>
+                    <span class="journey-type-arrow arrow-container"><span class="arrow-down">▼</span><span class="arrow-up no-display">▲</span></span>
+                </div>
+                <div class="speech-bubble hidden" style="position: relative;" id="options-car-details-container">
+                    <div class="option-field-container fuel-type-container car-detail-container">
+                        <label>Fuel type:</label>
+                        <select class="form-field form-field-option" id="fuel-type-dropdown" name="fuel-type-dropdown">
+                            <option value="diesel" selected="selected">Diesel</option>
+                            <option value="petrol">Petrol</option>
+                            <option value="electric">Electric</option>
+                          </select>
+                    </div>
+
+                    <div class="option-field-container fuel-consumption-container car-detail-container">
+                        <label>Fuel consumption:</label>
+                        <select class="form-field form-field-option" id="fuel-consumption-dropdown" name="fuel-consumption-dropdown">
+                            <option value="0">0 l/100km</option>
+                            <option value="1">1 l/100km</option>
+                            <option value="2">2 l/100km</option>
+                            <option value="3">3 l/100km</option>
+                            <option value="4">4 l/100km</option>
+                            <option value="5">5 l/100km</option>
+                            <option value="6">6 l/100km</option>
+                            <option value="7">7 l/100km</option>
+                            <option value="8" selected="selected">8 l/100km</option>
+                            <option value="9">9 l/100km</option>
+                            <option value="10">10 l/100km</option>
+                            <option value="11">11 l/100km</option>
+                            <option value="12">12 l/100km</option>
+                            <option value="13">13 l/100km</option>
+                            <option value="14">14 l/100km</option>
+                            <option value="15">15 l/100km</option>
+                            <option value="20">20 l/100km</option>
+                          </select>
+                    </div>
+
+                    <div class="option-field-container energy-consumption-container car-detail-container hidden">
+                        <label>Energy consumption:</label>
+                        <select class="form-field form-field-option" id="energy-consumption-dropdown" name="energy-consumption-dropdown">
+                            <option value="15">15 kWh/100km</option>
+                            <option value="16">16 kWh/100km</option>
+                            <option value="17">17 kWh/100km</option>
+                            <option value="18">18 kWh/100km</option>
+                            <option value="19" selected="selected">19 kWh/100km</option>
+                            <option value="20">20 kWh/100km</option>
+                            <option value="21">21 kWh/100km</option>
+                            <option value="22">22 kWh/100km</option>
+                          </select>
+                    </div>
+
+                    <div class="option-field-container electricity-country-container car-detail-container hidden">
+                        <label>Electricity mix:</label>
+                        <select class="form-field form-field-option" id="electricity-country-dropdown" name="electricity-country-dropdown">
+                            <option value="average" selected="selected">Average</option>
+                            <option value="AR">Argentina</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BR">Brazil</option>
+                            <option value="CA">Canada</option>
+                            <!-- <option value="CL">Chile</option> -->
+                            <option value="CN">China</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="DK">Denmark</option>
+                            <option value="EE">Estonia</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                            <option value="GR">Greece</option>
+                            <option value="IE">Ireland</option>
+                            <option value="IN">India</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="IT">Italy</option>
+                            <option value="JP">Japan</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxemburg</option>
+                            <option value="MX">Mexico</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="NO">Norway</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="RU">Russia</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="KR">South Korea</option>
+                            <option value="ES">Spain</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="US">United States</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-field">
+      <button class="btn btn-custo" id="calculate-btn" type="button">
+        Calculate
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="results-container no-display">
+    <h2>
+        Your Journey
+    </h2>
+
+    <div class="leg-container-ref hidden" data-kg-co2="0">
+        <h3 class="leg-title">x by plane</h3>
+        <div class="close-window">
+            ×
+        </div>
+        <div class="left-col">
+            <div class="left-col-inner">
+                <div class="element-left-col trip-type-result">
+                    <img class="small-icon" src="https://res.cloudinary.com/joanmm/image/upload/v1610378127/return-trip-white.png" alt="return icon">
+                    <span class="trip-type">Round-trip</span>
+                </div>
+
+                <div class="element-left-col tm-result">
+                    <img src="https://res.cloudinary.com/joanmm/image/upload/v1610378080/0_white.png" class="img-format">
+                    <span class="tm-type">By plane</span>
+                </div>
+
+                <div class="element-left-col pax-in-car hidden">
+                    <img class="small-icon" src="https://res.cloudinary.com/joanmm/image/upload/v1610381233/passenger-white.png" alt="passenger icon">
+                    <span class="pax-qty">1</span><span> passengers in the car</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="right-col co2-result">
+            <img class="co2-icon" src="https://res.cloudinary.com/joanmm/image/upload/v1610378118/co2-icon-white.png" alt="co2 icon">
+            <span style="font-size: 18px;" class="co2-value">0</span> kg CO<sub>2</sub>
+        </div>
+    </div>
+
+    <div id="next-result" style="display:none"></div>
+
+    <div id="all-legs">
+
+    </div>
+
+
+
+    <div class="btn btn-custo" id="add-journey-btn">
+        + Add journey
+    </div>
+
+    <div id="equal-sum-line"></div>
+
+    <div id="total-co2-container">
+        <div id="total-title">
+            Your Carbon Footprint
+        </div>
+        <div id="total-co2">
+            <span id="total-co2-int"></span> <span>kg CO<sub>2</sub>/person</span>
+        </div>
+
+        <div id="arctic-ice">
+            = <span id="arctic-ice-int"></span> <span>m<sup>2</sup> of arctic ice melted</span>
+            <div class="tooltip">
+                ⓘ
+                <span class="tooltiptext">
+                    According to <a href="https://science.sciencemag.org/content/354/6313/747" target="_blank" rel="noopener">this</a> study published in Science in 2016.
+                </span>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; font-size: 12px; padding: 0px 15px;">
+            Interested in reducing you carbon footprint as much as possible and offsetting the rest?
+        </div>
+
+        <a href="/en/blog/carbon-offsetting" target="_blank" style="text-decoration: none;" rel="noopener">
+            <div class="btn btn-custo" id="learn-co2-btn">
+                Learn more about CO<sub>2</sub>
+            </div>
+        </a>
+        <br>
+        <div style="font-size: 10px; padding: 0px 30px; margin-top: 50px; width: 100%;">
+            <div style="display: inline-block; text-align: left; max-width: 100%; float: right;">
+                <span>
+                    Calculation details are open-sourced on <a href="https://github.com/J0ANMM/carbon-calculator" target="_blank" rel="noopener">GitHub</a>.
+                </span>
+            </div>
+        </div>
+        <br>
+        <hr>
+    </div>
+</div>
+
+<div style="height:200px;">
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer=""></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/J0ANMM/carbon-calculator/all-js/carbon-calculator--travel.js"></script>
